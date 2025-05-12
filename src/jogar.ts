@@ -1,3 +1,4 @@
+import AvaliadorJogo from "./jogo/AvaliadorJogo";
 import Jogador from "./jogo/Jogador";
 import JogadorAutomatizado from "./jogo/JogadorAutomatizado";
 import Jogo from "./jogo/Jogo";
@@ -13,7 +14,7 @@ function exibeTabuleiro(partida: Partida) {
     for (let i = 0; i < tabuleiro.length; i++) {
         let linha = ""
         for (let j = 0; j < tabuleiro[i].length; j++) {
-            if (tabuleiro[i][j] == undefined) {
+            if (tabuleiro[i][j] == null) {
                 linha += " - ";
             } else if (tabuleiro[i][j] == Peca.Xis) {
                 linha += " X ";
@@ -55,7 +56,7 @@ while (continuaJogo) {
             console.log("Você realizou uma jogada inválida! ");
         }
         
-        if (partida.verificaFim() != SituacaoPartida.EmAndamento) {
+        if (AvaliadorJogo.verificaFim(partida.getTabuleiro()) != SituacaoPartida.EmAndamento) {
             continuaPartida = false;
         } else {
             
@@ -67,14 +68,14 @@ while (continuaJogo) {
                     console.log("CPU realizou uma jogada inválida! ");                    
                 }
 
-                if (partida.verificaFim() != SituacaoPartida.EmAndamento) {
+                if (AvaliadorJogo.verificaFim(partida.getTabuleiro()) != SituacaoPartida.EmAndamento) {
                     continuaPartida = false;
                 }
             }
         }
     }
 
-    let situacao: SituacaoPartida = partida.verificaFim();
+    let situacao: SituacaoPartida = AvaliadorJogo.verificaFim(partida.getTabuleiro());
     if (situacao == SituacaoPartida.VitoriaJogador1) {
         partida.getJogador1().adicionaVitoria();
         console.log(`${partida.getJogador1().getNome()} venceu!`);
